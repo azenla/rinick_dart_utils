@@ -7,6 +7,7 @@ class RC4 {
   int i = 0,
       j = 0;
   List<int> S;
+  
   RC4(List<int> key, [int round = 1]) {
     S = new List<int>(256);
     for (int x = 0; x < 256; ++x) {
@@ -25,6 +26,7 @@ class RC4 {
     }
     i = j = 0;
   }
+  
   /// standard RC4 bytes
   void xorBytes(List<int> bytes) {
     int t, len = bytes.length;
@@ -37,6 +39,7 @@ class RC4 {
       bytes[x] ^= S[(S[i] + S[j]) & 0xFF];
     }
   }
+  
   /// custom encryption
   void encryptBytes(List<int> bytes) {
     int t, len = bytes.length;
@@ -50,6 +53,7 @@ class RC4 {
       j = (j + bytes[x]) & 0xFF;
     }
   }
+  
   /// custom decryption
   void decryptBytes(List<int> bytes) {
     int t, len = bytes.length;
@@ -64,6 +68,7 @@ class RC4 {
       j = (j + byte) & 0xFF;
     }
   }
+  
   int nextByte() {
     i = (i + 1) & 0xFF;
     j = (j + S[i]) & 0xFF;
@@ -72,7 +77,8 @@ class RC4 {
     S[j] = t;
     return S[(S[i] + S[j]) & 0xFF];
   }
+  
   int nextInt(int max) {
-    return (nextByte() | nextByte()<<8 | nextByte()<<16) % max;
+    return (nextByte() | nextByte() << 8 | nextByte() << 16) % max;
   }
 }
